@@ -12,4 +12,8 @@
 [options]
 module.name_mapper='types\(.*\)' -> '<PROJECT_ROOT>/src/types\1'
 
+suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
+
+esproposal.optional_chaining=enable
+
 [strict]

@@ -1,3 +1,7 @@
 /node_modules
 .yarn-error
 /flow-typed/npm
+
+# Build Outputs
+/gatsby-node.js
+/types/
