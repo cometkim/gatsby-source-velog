@@ -12,6 +12,10 @@
     "flow-bin": "0.83.0"
   },
   "dependencies": {
-    "node-fetch": "2.2.0"
+    "axios": "0.18.0"
+  },
+  "scripts": {
+    "build": "babel -d . src",
+    "watch": "babel -w -d . src"
   }
 }
