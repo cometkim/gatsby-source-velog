@@ -4,6 +4,12 @@
   "main": "index.js",
   "author": "Hyeseong Kim <cometkim.kr@gmail.com>",
   "license": "MIT",
+  "peerDependencies": {
+    "gatsby": ">2.0.0-alpha"
+  },
+  "dependencies": {
+    "axios": "0.18.0"
+  },
   "devDependencies": {
     "@babel/cli": "7.1.2",
     "@babel/core": "7.1.2",
@@ -13,9 +19,6 @@
     "eslint": "5.7.0",
     "eslint-plugin-flowtype": "3.0.0",
     "flow-bin": "0.83.0"
-  },
-  "dependencies": {
-    "axios": "0.18.0"
   },
   "scripts": {
     "build": "babel -d . src",
