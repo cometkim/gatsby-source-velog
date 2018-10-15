@@ -2,6 +2,11 @@
 
 type ISO8601 = string;
 
+export type VelogResource = 
+    | VelogUser
+    | VelogPost
+    | VelogPostComment
+
 export type VelogUser = {
     // id 가 되어야함. 벨로퍼트님이 고쳐주실거야...
     // id: string,

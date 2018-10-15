@@ -1,9 +1,14 @@
 // @flow
 
-import type { VelogUser, VelogPost, VelogPostComment } from 'types/velog';
-
 import crypto from 'crypto';
 import axios from 'axios';
+
+import type {
+    VelogUser,
+    VelogPost,
+    VelogPostComment,
+    VelogResource,
+} from 'types/velog';
 
 const BASE_URL = 'https://api.velog.io';
 
@@ -26,8 +31,7 @@ type RootNodeOptions = {|
     username: string,
 |}
 
-type VelogResource = VelogUser | VelogPost | VelogPostComment
-type NodeSource<T: VelogResource> = T | {
+type NodeSource<T: VelogResource> = T & {
     parent: ?string,
     children: ?Array<string>,
     id: string,
@@ -156,6 +160,7 @@ exports.sourceNodes = async (
 
     // VelogPost, VelogComment -> VelogUser
     const sourcesBelongsToUser = [...postNodeSources, ...commentNodeSources].map(source => {
+        // $FlowFixMe: API 바뀌면 커버될 코드
         const userId = source.user.id;
         delete source.user;
         return {
