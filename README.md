@@ -1,5 +1,7 @@
 # gatsby-source-velog
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/cometkim/gatsby-source-velog.svg)](https://greenkeeper.io/)
+
 [GatsbyJS](https://www.gatsbyjs.org/) source plugin for [Velog](https://velog.io), the CMS created by [@velopert](https://github.com/velopert).
 
 This plugin will pulls posts and comments data from Velog's API Endpoint (https://api.velog.io), for specified user.
