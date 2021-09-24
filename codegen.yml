@@ -1,0 +1,9 @@
+schema: velog.v2.graphql
+
+generates:
+  ./src/__genereated__/types.ts:
+    plugins:
+      - typescript
+    config:
+      avoidOptionals: true
+      enumsAsTypes: true

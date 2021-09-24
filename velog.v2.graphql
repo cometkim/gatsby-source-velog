@@ -1,0 +1,195 @@
+type Comment {
+  created_at: Date
+  deleted: Boolean
+  has_replies: Boolean
+  id: ID!
+  level: Int
+  likes: Int
+  replies: [Comment]
+  replies_count: Int
+  text: String
+  user: User
+}
+
+scalar Date
+
+scalar JSON
+
+type LinkedPosts {
+  next: Post
+  previous: Post
+}
+
+type Mutation {
+  _empty: String
+  appendToSeries(post_id: ID!, series_id: ID!): Int
+  createPostHistory(body: String!, is_markdown: Boolean!, post_id: ID!, title: String!): PostHistory
+  createSeries(name: String!, url_slug: String!): Series
+  editComment(id: ID!, text: String!): Comment
+  editPost(body: String, id: ID!, is_markdown: Boolean, is_private: Boolean, is_temp: Boolean, meta: JSON, series_id: ID, tags: [String], thumbnail: String, title: String, url_slug: String): Post
+  editSeries(id: ID!, name: String!, series_order: [ID]): Series
+  likePost(id: ID!): Post
+  mergeTag(merge_to: String, selected: String): Boolean
+  postView(id: ID!): Boolean
+  removeComment(id: ID!): Boolean
+  removePost(id: ID!): Boolean
+  removeSeries(id: ID!): Boolean
+  unlikePost(id: ID!): Post
+  unregister(token: String!): Boolean
+  update_about(about: String!): UserProfile
+  update_email_rules(notification: Boolean!, promotion: Boolean!): UserMeta
+  update_profile(display_name: String!, short_bio: String!): UserProfile
+  update_social_info(profile_links: JSON!): UserProfile
+  update_thumbnail(url: String): UserProfile
+  update_velog_title(title: String!): VelogConfig
+  writeComment(comment_id: ID, post_id: ID!, text: String!): Comment
+  writePost(body: String, is_markdown: Boolean, is_private: Boolean, is_temp: Boolean, meta: JSON, series_id: ID, tags: [String], thumbnail: String, title: String, url_slug: String): Post
+}
+
+type Post {
+  body: String
+  comments: [Comment]
+  comments_count: Int
+  created_at: Date
+  id: ID!
+  is_markdown: Boolean
+  is_private: Boolean
+  is_temp: Boolean
+  last_read_at: Date
+  liked: Boolean
+  likes: Int
+  linked_posts: LinkedPosts
+  meta: JSON
+  recommended_posts: [Post]
+  released_at: Date
+  series: Series
+  short_description: String
+  tags: [String]
+  thumbnail: String
+  title: String
+  updated_at: Date
+  url_slug: String
+  user: User
+  views: Int
+}
+
+type PostHistory {
+  body: String
+  created_at: Date
+  fk_post_id: ID
+  id: ID
+  is_markdown: Boolean
+  title: String
+}
+
+type Query {
+  _version: String
+  auth: User
+  comment(comment_id: ID): Comment
+  getStats(post_id: ID!): Stats
+  lastPostHistory(post_id: ID!): PostHistory
+  post(id: ID, url_slug: String, username: String): Post
+  postHistories(post_id: ID): [PostHistory]
+  posts(cursor: ID, limit: Int, tag: String, temp_only: Boolean, username: String): [Post]
+  readingList(cursor: ID, limit: Int, type: ReadingListOption): [Post]
+  searchPosts(keyword: String!, limit: Int, offset: Int, username: String): SearchResult
+  series(id: ID, url_slug: String, username: String): Series
+  seriesList(username: String): [Series]
+  subcomments(comment_id: ID): [Comment]
+  tag(name: String!): Tag
+  tags(cursor: ID, limit: Int, sort: String!): [Tag]
+  trendingPosts(limit: Int, offset: Int, timeframe: String): [Post]
+  unregister_token: String
+  user(id: ID, username: String): User
+  userTags(username: String): UserTags
+  velog_config(username: String): VelogConfig
+}
+
+type ReadCountByDay {
+  count: Int
+  day: Date
+}
+
+enum ReadingListOption {
+  LIKED
+  READ
+}
+
+type SearchResult {
+  count: Int
+  posts: [Post]
+}
+
+type Series {
+  created_at: Date
+  description: String
+  id: ID!
+  name: String
+  posts_count: Int
+  series_posts: [SeriesPost]
+  thumbnail: String
+  updated_at: Date
+  url_slug: String
+  user: User
+}
+
+type SeriesPost {
+  id: ID!
+  index: Int
+  post: Post
+}
+
+type Stats {
+  count_by_day: [ReadCountByDay]
+  total: Int
+}
+
+type Tag {
+  created_at: String
+  description: String
+  id: ID!
+  name: String
+  posts_count: Int
+  thumbnail: String
+}
+
+type User {
+  created_at: Date
+  email: String
+  id: ID!
+  is_certified: Boolean
+  profile: UserProfile
+  series_list: [Series]
+  updated_at: Date
+  user_meta: UserMeta
+  username: String
+  velog_config: VelogConfig
+}
+
+type UserMeta {
+  email_notification: Boolean
+  email_promotion: Boolean
+  id: ID!
+}
+
+type UserProfile {
+  about: String
+  created_at: Date
+  display_name: String
+  id: ID!
+  profile_links: JSON
+  short_bio: String
+  thumbnail: String
+  updated_at: Date
+}
+
+type UserTags {
+  posts_count: Int
+  tags: [Tag]
+}
+
+type VelogConfig {
+  id: ID!
+  logo_image: String
+  title: String
+}
