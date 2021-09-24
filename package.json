@@ -2,13 +2,11 @@
   "name": "gatsby-source-velog",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Hyeseong Kim <cometkim.kr@gmail.com>",
   "license": "MIT",
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "gatsby-source"
-  ],
+  "author": {
+    "name": "Hyeseong Kim",
+    "email": "hey@hyeseong.kim"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/cometkim/gatsby-source-velog.git"
@@ -16,6 +14,14 @@
   "bugs": {
     "url": "https://github.com/cometkim/gatsby-source-velog/issues"
   },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-source",
+    "velog",
+    "blog",
+    "cms"
+  ],
   "scripts": {
     "prepack": "yarn codegen && yarn build",
     "build": "babel -d . src -x .ts",
