@@ -1,5 +1,16 @@
 import type { GatsbyNode } from 'gatsby';
 
+import type { PluginOptions } from './types';
+
+export const pluginOptionsSchema: GatsbyNode['pluginOptionsSchema'] = ({
+  Joi,
+}) => {
+  return Joi.object({
+    username: Joi.string().required(),
+    includeTags: Joi.array().items(Joi.string()).optional(),
+  });
+};
+
 export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] = ({
   actions,
 }) => {
