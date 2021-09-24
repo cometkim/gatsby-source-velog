@@ -1,7 +1,7 @@
-/node_modules
-.yarn-error
-/flow-typed/npm
+.DS_Store
+*.log
+
+node_modules/
 
 # Build Outputs
 /gatsby-node.js
-/types/
