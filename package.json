@@ -16,8 +16,21 @@
   "bugs": {
     "url": "https://github.com/cometkim/gatsby-source-velog/issues"
   },
-  "scripts": {},
+  "scripts": {
+    "build": "babel -d . src -x .ts"
+  },
+  "peerDependencies": {
+    "gatsby": "^2.25.0 || ^3.0.0 || ^4.0.0"
+  },
+  "dependencies": {
+    "gatsby-source-filesystem": "^3.0.0"
+  },
   "devDependencies": {
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.5",
+    "@babel/plugin-transform-typescript": "^7.15.4",
+    "babel-preset-gatsby-package": "^1.14.0",
+    "gatsby": "^3.14.0",
     "typescript": "^4.4.3"
   }
 }
