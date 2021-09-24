@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/cometkim/gatsby-source-velog/issues"
   },
-  "scripts": {}
+  "scripts": {},
+  "devDependencies": {
+    "typescript": "^4.4.3"
+  }
 }
