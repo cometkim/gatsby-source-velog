@@ -47,8 +47,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["gatsby-source-filesystem", "virtual:8a9b6779a5ba5509ca8670ff74335f073b8a201b936c0c9742eb466ea156f8d34e2c840cea74fab1a705712d9b36c1b34f834ee6ba33fa0963231bc873352d67#npm:3.14.0"],
             ["graphql", "npm:15.6.0"],
             ["graphql-request", "virtual:8a9b6779a5ba5509ca8670ff74335f073b8a201b936c0c9742eb466ea156f8d34e2c840cea74fab1a705712d9b36c1b34f834ee6ba33fa0963231bc873352d67#npm:3.5.0"],
-            ["typescript", "patch:typescript@npm%3A4.4.3#~builtin<compat/typescript>::version=4.4.3&hash=32657b"],
-            ["undici", "npm:4.7.0"]
+            ["typescript", "patch:typescript@npm%3A4.4.3#~builtin<compat/typescript>::version=4.4.3&hash=32657b"]
           ],
           "linkType": "SOFT",
         }]
@@ -10340,8 +10339,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["gatsby-source-filesystem", "virtual:8a9b6779a5ba5509ca8670ff74335f073b8a201b936c0c9742eb466ea156f8d34e2c840cea74fab1a705712d9b36c1b34f834ee6ba33fa0963231bc873352d67#npm:3.14.0"],
             ["graphql", "npm:15.6.0"],
             ["graphql-request", "virtual:8a9b6779a5ba5509ca8670ff74335f073b8a201b936c0c9742eb466ea156f8d34e2c840cea74fab1a705712d9b36c1b34f834ee6ba33fa0963231bc873352d67#npm:3.5.0"],
-            ["typescript", "patch:typescript@npm%3A4.4.3#~builtin<compat/typescript>::version=4.4.3&hash=32657b"],
-            ["undici", "npm:4.7.0"]
+            ["typescript", "patch:typescript@npm%3A4.4.3#~builtin<compat/typescript>::version=4.4.3&hash=32657b"]
           ],
           "linkType": "SOFT",
         }]
@@ -18705,15 +18703,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/unc-path-regex-npm-0.1.2-53c3343ef3-a05fa2006b.zip/node_modules/unc-path-regex/",
           "packageDependencies": [
             ["unc-path-regex", "npm:0.1.2"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["undici", [
-        ["npm:4.7.0", {
-          "packageLocation": "./.yarn/cache/undici-npm-4.7.0-71c0faae12-bfa38ba56f.zip/node_modules/undici/",
-          "packageDependencies": [
-            ["undici", "npm:4.7.0"]
           ],
           "linkType": "HARD",
         }]
