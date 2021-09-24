@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-velog",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "index.js",
   "license": "MIT",
   "author": {
@@ -30,6 +30,7 @@
   },
   "files": [
     "/*.js",
+    "/__generated__/*.js",
     "types.d.ts"
   ],
   "peerDependencies": {
