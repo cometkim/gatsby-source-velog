@@ -481,7 +481,7 @@ export type GetUserByUsernameQueryVariables = Exact<{
 }>;
 
 
-export type GetUserByUsernameQuery = { __typename?: 'Query', user: Maybe<{ __typename?: 'User', username: Maybe<string>, velogId: string, isCertified: Maybe<boolean>, profile: Maybe<{ __typename?: 'UserProfile', thumbnail: Maybe<string>, displayName: Maybe<string>, bio: Maybe<string>, aboutHtml: Maybe<string>, socialProfiles: Maybe<any> }> }> };
+export type GetUserByUsernameQuery = { __typename?: 'Query', user: Maybe<{ __typename?: 'User', username: Maybe<string>, velogId: string, isCertified: Maybe<boolean>, profile: Maybe<{ __typename?: 'UserProfile', thumbnail: Maybe<string>, displayName: Maybe<string>, bio: Maybe<string>, aboutHtml: Maybe<string>, socialProfile: Maybe<any> }> }> };
 
 export type GetPostsByUsernameQueryVariables = Exact<{
   username: Scalars['String'];
@@ -489,7 +489,14 @@ export type GetPostsByUsernameQueryVariables = Exact<{
 }>;
 
 
-export type GetPostsByUsernameQuery = { __typename?: 'Query', posts: Maybe<Array<Maybe<{ __typename?: 'Post', thumbnail: Maybe<string>, title: Maybe<string>, tags: Maybe<Array<Maybe<string>>>, velogId: string, shortDescription: Maybe<string>, slug: Maybe<string>, publishedAt: Maybe<any>, updatedAt: Maybe<any>, rawContent: Maybe<string>, author: Maybe<{ __typename?: 'User', username: Maybe<string>, velogId: string }>, series: Maybe<{ __typename?: 'Series', velogId: string }> }>>> };
+export type GetPostsByUsernameQuery = { __typename?: 'Query', posts: Maybe<Array<Maybe<{ __typename?: 'Post', thumbnail: Maybe<string>, title: Maybe<string>, tags: Maybe<Array<Maybe<string>>>, velogId: string, shortDescription: Maybe<string>, slug: Maybe<string>, publishedAt: Maybe<any>, updatedAt: Maybe<any>, rawContent: Maybe<string>, author: Maybe<{ __typename?: 'User', username: Maybe<string>, velogId: string }>, series: Maybe<{ __typename?: 'Series', velogId: string, seriesPosts: Maybe<Array<Maybe<{ __typename?: 'SeriesPost', index: Maybe<number>, item: Maybe<{ __typename?: 'Post', velogId: string }> }>>> }> }>>> };
+
+export type GetSeriesListByUsernameQueryVariables = Exact<{
+  username: Scalars['String'];
+}>;
+
+
+export type GetSeriesListByUsernameQuery = { __typename?: 'Query', seriesList: Maybe<Array<Maybe<{ __typename?: 'Series', name: Maybe<string>, description: Maybe<string>, thumbnail: Maybe<string>, velogId: string, slug: Maybe<string>, owner: Maybe<{ __typename?: 'User', username: Maybe<string>, velogId: string }>, posts: Maybe<Array<Maybe<{ __typename?: 'SeriesPost', item: Maybe<{ __typename?: 'Post', velogId: string }> }>>> }>>> };
 
 
 export const GetTagsByUsernameDocument = gql`
@@ -516,7 +523,7 @@ export const GetUserByUsernameDocument = gql`
       bio: short_bio
       thumbnail
       aboutHtml: about
-      socialProfiles: profile_links
+      socialProfile: profile_links
     }
   }
 }
@@ -539,6 +546,32 @@ export const GetPostsByUsernameDocument = gql`
     }
     series {
       velogId: id
+      seriesPosts: series_posts {
+        index
+        item: post {
+          velogId: id
+        }
+      }
+    }
+  }
+}
+    `;
+export const GetSeriesListByUsernameDocument = gql`
+    query getSeriesListByUsername($username: String!) {
+  seriesList(username: $username) {
+    velogId: id
+    name
+    description
+    slug: url_slug
+    thumbnail
+    owner: user {
+      velogId: id
+      username
+    }
+    posts: series_posts {
+      item: post {
+        velogId: id
+      }
     }
   }
 }
@@ -559,6 +592,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getPostsByUsername(variables: GetPostsByUsernameQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetPostsByUsernameQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetPostsByUsernameQuery>(GetPostsByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getPostsByUsername');
+    },
+    getSeriesListByUsername(variables: GetSeriesListByUsernameQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetSeriesListByUsernameQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetSeriesListByUsernameQuery>(GetSeriesListByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getSeriesListByUsername');
     }
   };
 }

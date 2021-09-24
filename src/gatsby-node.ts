@@ -10,105 +10,265 @@ export const pluginOptionsSchema: GatsbyNode['pluginOptionsSchema'] = ({
     baseUrl: Joi.string().default('https://velog.io'),
     endpoint: Joi.string().default('https://v2.velog.io/graphql'),
     username: Joi.string().required(),
-    includeTags: Joi.array().items(Joi.string()).optional(),
+    // TODO
+    // includeTags: Joi.array().items(Joi.string()).optional(),
   });
 };
 
 export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] = ({
   actions,
-}) => {
-  const gql = String.raw;
-  const { createTypes } = actions;
-
-  createTypes(gql`
-    type VelogTag implements Node @dontInfer {
-      velogId: String!
-      velogUrl: String!
-      owner: VelogUser! @link
-      name: String!
-      description: String
-      thumbnail: File @link
-      posts: [VelogPost!]! @link(by: "velogId")
-    }
-
-    type VelogUser implements Node @dontInfer {
-      velogId: String!
-      velogUrl: String!
-      username: String!
-      displayName: String!
-      bio: String
-      aboutHtml: String
-      isCertified: Boolean!
-      thumbnail: File @link
-      socialProfile: VelogUserSocialProfile!
-      posts: [VelogPost!]! @link(by: "velogId")
-    }
-
-    type VelogUserSocialProfile {
-      url: String
-      email: String
-      github: String
-      facebook: String
-      twitter: String
-    }
-
-    type VelogSeries implements Node {
-      velogId: String!
-      velogUrl: String!
-      thumbnail: File
-      owner: VelogUser! @link(by: "velogId")
-      posts: [VelogPost!]! @link(by: "velogId")
-    }
-
-    type VelogPost implements Node @dontInfer {
-      velogId: String!
-      velogUrl: String!
-      slug: String!
-      title: String!
-      rawContent: String!
-      shortDescription: String!
-      thumbnail: File @link
-      publishedAt: Date! @dateformat
-      updatedAt: Date! @dateformat
-      author: VelogUser! @link(by: "velogId", from: "author.velogId")
-      tags: [VelogTag!]! @link(by: "name")
-      series: VelogSeries
-    }
-  `);
-};
-
-export const createResolvers: GatsbyNode['createResolvers'] = async ({
-  createResolvers,
+  schema,
 }, options) => {
   // Must be validated by pluginOptionsSchema
-  const { baseUrl, username } = options as unknown as Required<PluginOptions>;
+  const { baseUrl } = options as unknown as Required<PluginOptions>;
 
-  createResolvers({
-    VelogUser: {
-      velogUrl: {
-        type: 'String!',
-        resolve(source: { username: string }) {
-          return `${baseUrl}/@${source.username}`;
+  actions.createTypes([
+    schema.buildObjectType({
+      name: 'VelogUser',
+      interfaces: ['Node'],
+      extensions: {
+        infer: false,
+      },
+      fields: {
+        velogId: 'String!',
+        velogUrl: {
+          type: 'String!',
+          resolve(source: { username: string }) {
+            return `${baseUrl}/@${source.username}`;
+          },
+        },
+        username: 'String!',
+        displayName: 'String!',
+        bio: 'String',
+        aboutHtml: 'String',
+        isCertified: 'Boolean!',
+        thumbnail: {
+          type: 'File',
+          extensions: {
+            link: {},
+          },
+        },
+        socialProfile: {
+          type: 'VelogUserSocialProfile!',
+          resolve(source: { socialProfile: unknown }) {
+            return source.socialProfile;
+          },
+        },
+        posts: {
+          type: '[VelogPost!]!',
+          resolve(source: { velogId: string }, _args, context) {
+            return context.nodeModle.runQuery({
+              type: 'VelogPost',
+              query: {
+                filter: {
+                  author: {
+                    velogId: { eq: source.velogId },
+                  },
+                },
+              },
+              firstOnly: false,
+            });
+          },
         },
       },
-    },
-    VelogTag: {
-      velogUrl: {
-        type: 'String!',
-        resolve(source: { name: string }) {
-          return `${baseUrl}/@${username}?tag=${source.name}`;
+    }),
+    schema.buildObjectType({
+      name: 'VelogUserSocialProfile',
+      fields: {
+        url: 'String',
+        email: 'String',
+        github: 'String',
+        facebook: 'String',
+        twitter: 'String',
+      },
+    }),
+    schema.buildObjectType({
+      name: 'VelogTag',
+      interfaces: ['Node'],
+      extensions: {
+        infer: false,
+      },
+      fields: {
+        velogId: 'String!',
+        velogUrl: {
+          type: 'String!',
+          resolve(source: { owner: { username: string }, name: string }) {
+            return `${baseUrl}/@${source.owner.username}?tag=${source.name}`;
+          },
+        },
+        owner: {
+          type: 'VelogUser!',
+          extensions: {
+            link: {},
+          },
+        },
+        name: 'String!',
+        description: 'String',
+        thumbnail: {
+          type: 'File',
+          extensions: {
+            link: {},
+          },
+        },
+        posts: {
+          type: '[VelogPost!]!',
+          resolve(source: { name: string }, _args, context) {
+            return context.nodeModel.runQuery({
+              type: 'VelogPost',
+              query: {
+                filter: {
+                  tags: {
+                    elemMatch: {
+                      name: { eq: source.name },
+                    },
+                  },
+                },
+              },
+              firstOnly: false,
+            });
+          },
         },
       },
-    },
-    VelogPost: {
-      velogUrl: {
-        type: 'String!',
-        resolve(source: { slug: string, author: { username: string } }) {
-          return `${baseUrl}/@${source.author.username}/${source.slug}`;
+    }),
+    schema.buildObjectType({
+      name: 'VelogPost',
+      interfaces: ['Node'],
+      extensions: {
+        infer: false,
+      },
+      fields: {
+        velogId: 'String!',
+        velogUrl: {
+          type: 'String!',
+          resolve(source: { slug: string, author: { username: string } }) {
+            return `${baseUrl}/@${source.author.username}/${source.slug}`;
+          },
+        },
+        slug: 'String!',
+        title: 'String!',
+        rawContent: 'String!',
+        shortDescription: 'String!',
+        thumbnail: {
+          type: 'String',
+          extensions: {
+            link: {},
+          },
+        },
+        publishedAt: {
+          type: 'Date!',
+          extensions: {
+            dateformat: {},
+          },
+        },
+        updatedAt: {
+          type: 'Date!',
+          extensions: {
+            dateformat: {},
+          },
+        },
+        author: {
+          type: 'VelogUser!',
+          extensions: {
+            link: {
+              by: 'velogId',
+              from: 'author.velogId',
+            },
+          },
+        },
+        tags: {
+          type: '[VelogTag!]!',
+          extensions: {
+            link: {
+              by: 'name',
+            },
+          },
+        },
+        series: {
+          type: 'VelogPostSeries',
+          resolve(source: {
+            velogId: string,
+            series: { velogId: string } | null,
+          }) {
+            return source.series && { ...source.series, postId: source.velogId };
+          },
         },
       },
-    },
-  });
+    }),
+    schema.buildObjectType({
+      name: 'VelogPostSeries',
+      fields: {
+        index: {
+          type: 'Int!',
+          resolve(source: {
+            postId: string,
+            seriesPosts: Array<{ index: number, item: { velogId: string } }>,
+          }) {
+            return source.seriesPosts
+              .find(post => post.item.velogId === source.postId)?.index;
+          },
+        },
+        node: {
+          type: 'VelogSeries!',
+          extensions: {
+            link: {
+              by: 'velogId',
+              from: 'series.velogId',
+            },
+          },
+        }
+      },
+    }),
+    schema.buildObjectType({
+      name: 'VelogSeries',
+      interfaces: ['Node'],
+      extensions: {
+        infer: false,
+      },
+      fields: {
+        velogId: 'String!',
+        velogUrl: {
+          type: 'String!',
+          resolve(source: { owner: { username: string }, slug: string }) {
+            return `${baseUrl}/${source.owner.username}/series/${source.slug}`;
+          },
+        },
+        name: 'String!',
+        description: 'String',
+        slug: 'String!',
+        thumbnail: {
+          type: 'File',
+          extensions: {
+            link: {},
+          },
+        },
+        owner: {
+          type: 'VelogUser!',
+          extensions: {
+            link: {
+              by: 'velogId',
+              from: 'owner.velogId',
+            },
+          },
+        },
+        posts: {
+          type: '[VelogPost!]!',
+          resolve(source: { posts: Array<{ item: { velogId: string } }> }, _args, context) {
+            return context.nodeModel.runQuery({
+              type: 'VelogPost',
+              query: {
+                filter: {
+                  velogId: {
+                    in: source.posts.map(post => post.item.velogId),
+                  },
+                },
+              },
+              firstOnly: false,
+            });
+          },
+        },
+      },
+    }),
+  ]);
 };
 
 export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
@@ -250,4 +410,35 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
     });
   });
   await Promise.all(postSourcing);
+
+  const seriesResult = await client.getSeriesListByUsername({ username });
+  const seriesSourcing = unwrapElements(seriesResult.seriesList!).map(async series => {
+    const seriesSource: Source = {
+      ...series,
+      id: createNodeId(`VelogSeries:${series.velogId}`),
+    };
+    if (series.thumbnail) {
+      const thumbnailNode = await createRemoteFileNode({
+        url: series.thumbnail,
+        store,
+        cache,
+        reporter,
+        createNode,
+        createNodeId,
+      });
+      seriesSource.thumbnail = thumbnailNode.id;
+    } else {
+      delete seriesSource['thumbnail'];
+    }
+    createNode({
+      ...seriesSource,
+      parent: null,
+      children: [],
+      internal: {
+        type: 'VelogSeries',
+        contentDigest: createContentDigest(seriesSource),
+      },
+    });
+  });
+  await Promise.all(seriesSourcing);
 };

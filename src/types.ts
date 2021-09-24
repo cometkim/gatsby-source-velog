@@ -21,5 +21,6 @@ export type PluginOptions = {
   /**
    * Tag names to include
    */
-  includeTags?: string[],
+  // TODO
+  // includeTags?: string[],
 };

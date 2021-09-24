@@ -1526,13 +1526,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cometjs/core@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "@cometjs/core@npm:1.2.0"
-  checksum: 5e1e08dc28452fb19f8692ca12e37499ddef4d7589f82e82b331b2bd01aaa115607950d30d5f351a07c8fb0791d0a11af139e82c9dd67b7347837237de123055
-  languageName: node
-  linkType: hard
-
 "@endemolshinegroup/cosmiconfig-typescript-loader@npm:3.0.2":
   version: 3.0.2
   resolution: "@endemolshinegroup/cosmiconfig-typescript-loader@npm:3.0.2"
@@ -7373,7 +7366,6 @@ fsevents@~2.3.2:
     "@babel/cli": ^7.15.7
     "@babel/core": ^7.15.5
     "@babel/plugin-transform-typescript": ^7.15.4
-    "@cometjs/core": ^1.2.0
     "@graphql-codegen/cli": ^2.2.0
     "@graphql-codegen/typescript": ^2.2.2
     "@graphql-codegen/typescript-graphql-request": ^4.1.4

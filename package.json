@@ -17,6 +17,7 @@
     "url": "https://github.com/cometkim/gatsby-source-velog/issues"
   },
   "scripts": {
+    "prepack": "yarn codegen && yarn build",
     "build": "babel -d . src -x .ts",
     "codegen": "graphql-codegen"
   },
@@ -24,7 +25,6 @@
     "gatsby": "^2.25.0 || ^3.0.0 || ^4.0.0"
   },
   "dependencies": {
-    "@cometjs/core": "^1.2.0",
     "gatsby-source-filesystem": "^3.0.0",
     "graphql-request": "^3.5.0",
     "undici": "^4.7.0"
