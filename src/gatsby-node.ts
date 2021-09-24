@@ -1,5 +1,6 @@
 import type { GatsbyNode } from 'gatsby';
 import { createRemoteFileNode } from 'gatsby-source-filesystem';
+import { Condition } from '@cometjs/core';
 import type { PluginOptions } from './types';
 import { makeClient } from './client';
 
@@ -24,9 +25,10 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
     type VelogTag implements Node {
       velogId: String!
       velogUrl: String!
+      owner: VelogUser! @link
       name: String!
       description: String
-      thumbnail: File
+      thumbnail: File @link
       posts: [VelogPost!]! @link(by: "velogId")
     }
 
@@ -80,14 +82,22 @@ export const createResolvers: GatsbyNode['createResolvers'] = async ({
   createResolvers,
 }, options) => {
   // Must be validated by pluginOptionsSchema
-  const { baseUrl } = options as unknown as Required<PluginOptions>;
+  const { baseUrl, username } = options as unknown as Required<PluginOptions>;
 
   createResolvers({
     VelogUser: {
       velogUrl: {
         type: 'String!',
-        resolve: (source: { username: string }) => {
+        resolve(source: { username: string }) {
           return `${baseUrl}/@${source.username}`;
+        },
+      },
+    },
+    VelogTag: {
+      velogUrl: {
+        type: 'String!',
+        resolve(source: { name: string }) {
+          return `${baseUrl}/@${username}?tag=${source.name}`;
         },
       },
     },
@@ -115,9 +125,10 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
   const user = userResult.user!;
   const userProfile = user.profile!;
 
-  const userSource: Record<string, unknown> = {
+  const userSource: { id: string } & Record<string, unknown> = {
     ...user,
     ...userProfile,
+    id: createNodeId(`VelogUser:${user.id}`),
     velogId: user.id,
   };
 
@@ -137,7 +148,6 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
 
   createNode({
     ...userSource,
-    id: createNodeId(`VelogUser:${user.id}`),
     parent: null,
     children: [],
     internal: {
@@ -145,4 +155,42 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
       contentDigest: createContentDigest(userSource),
     },
   });
+
+  const tagsResult = await client.getTagsByUsername({ username });
+  const tags = tagsResult.userTags!.tags || [];
+
+  const tagSourcing = tags.filter(Condition.isTruthy).map(async tag => {
+    const tagSource: Record<string, unknown> = {
+      ...tag,
+      velogId: tag.id,
+      owner: userSource.id,
+    };
+
+    if (tag.thumbnail) {
+      const thumbnailNode = await createRemoteFileNode({
+        url: tag.thumbnail,
+        store,
+        cache,
+        reporter,
+        createNode,
+        createNodeId,
+      });
+      tagSource.thumbnail = thumbnailNode.id;
+    } else {
+      delete tagSource['thumbnail'];
+    }
+
+    createNode({
+      ...tagSource,
+      id: createNodeId(`VelogTag:${tag.id}`),
+      parent: null,
+      children: [],
+      internal: {
+        type: 'VelogTag',
+        contentDigest: createContentDigest(tagSource),
+      },
+    });
+  });
+
+  await Promise.all(tagSourcing);
 };
