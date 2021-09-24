@@ -5,6 +5,13 @@
     "moduleResolution": "Node",
     "strict": true,
     "composite": true,
-    "incremental": true
-  }
+    "incremental": true,
+    "skipLibCheck": true,
+    "rootDir": "src",
+    "outDir": "."
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": []
 }

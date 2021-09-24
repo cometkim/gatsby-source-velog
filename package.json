@@ -23,10 +23,15 @@
     "cms"
   ],
   "scripts": {
-    "prepack": "yarn codegen && yarn build",
+    "prepack": "yarn codegen && yarn tsc && yarn build",
     "build": "babel -d . src -x .ts",
-    "codegen": "graphql-codegen"
+    "codegen": "graphql-codegen",
+    "tsc": "tsc --emitDeclarationOnly"
   },
+  "files": [
+    "/*.js",
+    "types.d.ts"
+  ],
   "peerDependencies": {
     "gatsby": "^2.25.0 || ^3.0.0 || ^4.0.0"
   },

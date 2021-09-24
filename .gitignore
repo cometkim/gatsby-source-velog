@@ -5,6 +5,7 @@ node_modules/
 
 # Build Outputs
 /*.js
+/*.d.ts
 /__generated__/
 !/index.js
 
