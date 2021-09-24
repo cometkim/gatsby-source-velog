@@ -1,6 +1,5 @@
 import type { GatsbyNode } from 'gatsby';
 import { createRemoteFileNode } from 'gatsby-source-filesystem';
-import { Condition } from '@cometjs/core';
 import type { PluginOptions } from './types';
 import { makeClient } from './client';
 
@@ -22,7 +21,7 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
   const { createTypes } = actions;
 
   createTypes(gql`
-    type VelogTag implements Node {
+    type VelogTag implements Node @dontInfer {
       velogId: String!
       velogUrl: String!
       owner: VelogUser! @link
@@ -61,17 +60,17 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
       posts: [VelogPost!]! @link(by: "velogId")
     }
 
-    type VelogPost implements Node {
+    type VelogPost implements Node @dontInfer {
       velogId: String!
       velogUrl: String!
       slug: String!
       title: String!
       rawContent: String!
       shortDescription: String!
-      thumbnail: File
+      thumbnail: File @link
       publishedAt: Date! @dateformat
       updatedAt: Date! @dateformat
-      author: VelogUser! @link(by: "velogId")
+      author: VelogUser! @link(by: "velogId", from: "author.velogId")
       tags: [VelogTag!]! @link(by: "name")
       series: VelogSeries
     }
@@ -101,6 +100,14 @@ export const createResolvers: GatsbyNode['createResolvers'] = async ({
         },
       },
     },
+    VelogPost: {
+      velogUrl: {
+        type: 'String!',
+        resolve(source: { slug: string, author: { username: string } }) {
+          return `${baseUrl}/@${source.author.username}/${source.slug}`;
+        },
+      },
+    },
   });
 };
 
@@ -114,6 +121,17 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
 }, options) => {
   const { createNode } = actions;
 
+  type Source = { id: string } & Record<string, unknown>;
+
+  // Type util to unwrap Promise
+  type Awaited<T> = T extends Promise<infer U> ? Awaited<U> : T;
+
+  // Type util to eliminate non-existence nullables
+  type UnwrapElement<T> = T extends Array<infer U> ? Array<NonNullable<U>> : never;
+  function unwrapElements<T extends any[]>(arr: T): UnwrapElement<T> {
+    return arr as unknown as UnwrapElement<T>;
+  }
+
   // Must be validated by pluginOptionsSchema
   const {
     endpoint,
@@ -124,14 +142,11 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
   const userResult = await client.getUserByUsername({ username });
   const user = userResult.user!;
   const userProfile = user.profile!;
-
-  const userSource: { id: string } & Record<string, unknown> = {
+  const userSource: Source = {
     ...user,
     ...userProfile,
-    id: createNodeId(`VelogUser:${user.id}`),
-    velogId: user.id,
+    id: createNodeId(`VelogUser:${user.velogId}`),
   };
-
   if (userProfile.thumbnail) {
     const thumbnailNode = await createRemoteFileNode({
       url: userProfile.thumbnail,
@@ -145,7 +160,6 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
   } else {
     delete userSource['thumbnail'];
   }
-
   createNode({
     ...userSource,
     parent: null,
@@ -158,14 +172,12 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
 
   const tagsResult = await client.getTagsByUsername({ username });
   const tags = tagsResult.userTags!.tags || [];
-
-  const tagSourcing = tags.filter(Condition.isTruthy).map(async tag => {
-    const tagSource: Record<string, unknown> = {
+  const tagSourcing = unwrapElements(tags).map(async tag => {
+    const tagSource: Source = {
       ...tag,
-      velogId: tag.id,
+      id: createNodeId(`VelogTag:${tag.velogId}`),
       owner: userSource.id,
     };
-
     if (tag.thumbnail) {
       const thumbnailNode = await createRemoteFileNode({
         url: tag.thumbnail,
@@ -179,10 +191,8 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
     } else {
       delete tagSource['thumbnail'];
     }
-
     createNode({
       ...tagSource,
-      id: createNodeId(`VelogTag:${tag.id}`),
       parent: null,
       children: [],
       internal: {
@@ -191,6 +201,53 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
       },
     });
   });
-
   await Promise.all(tagSourcing);
+
+  let postCursor: string | null = null;
+  const postCount = tagsResult.userTags!.postCount || 0;
+  type PostResult = Awaited<ReturnType<typeof client.getPostsByUsername>>;
+  const postSources: UnwrapElement<PostResult['posts']> = [];
+  while (postSources.length < postCount) {
+    const postsResult = await client.getPostsByUsername({ username, cursor: postCursor });
+    const current = unwrapElements(postsResult.posts!);
+    for (const source of current) {
+      postSources.push(source);
+    }
+    const last = current.slice(-1)[0] ?? null;
+    if (last?.velogId == null) {
+      break;
+    }
+    postCursor = last.velogId as string | null;
+  }
+  const postSourcing = postSources.map(async post => {
+    const postSource: Source = {
+      ...post,
+      id: createNodeId(`VelogPost:${post.velogId}`),
+    };
+    if (post.thumbnail) {
+      const thumbnailNode = await createRemoteFileNode({
+        url: post.thumbnail,
+        store,
+        cache,
+        reporter,
+        createNode,
+        createNodeId,
+      });
+      postSource.thumbnail = thumbnailNode.id;
+    } else {
+      delete postSource['thumbnail'];
+    }
+    createNode({
+      ...postSource,
+      parent: null,
+      children: [],
+      internal: {
+        type: 'VelogPost',
+        mediaType: 'text/markdown',
+        content: post.rawContent ?? '',
+        contentDigest: createContentDigest(postSource),
+      },
+    });
+  });
+  await Promise.all(postSourcing);
 };

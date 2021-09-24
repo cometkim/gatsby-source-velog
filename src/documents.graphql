@@ -1,7 +1,7 @@
 query getTagsByUsername($username: String!) {
   userTags(username: $username) {
     tags {
-      id
+      velogId: id
       name
       description
       thumbnail
@@ -12,16 +12,36 @@ query getTagsByUsername($username: String!) {
 
 query getUserByUsername($username: String!) {
   user(username: $username) {
-    id
+    velogId: id
     username
     isCertified: is_certified
     profile {
-      id
       displayName: display_name
       bio: short_bio
       thumbnail
       aboutHtml: about
       socialProfiles: profile_links
+    }
+  }
+}
+
+query getPostsByUsername($username: String!, $cursor: ID) {
+  posts(username: $username, cursor: $cursor) {
+    velogId: id
+    thumbnail
+    title
+    shortDescription: short_description
+    slug: url_slug
+    tags
+    publishedAt: released_at
+    updatedAt: updated_at
+    rawContent: body
+    author: user {
+      velogId: id
+      username
+    }
+    series {
+      velogId: id
     }
   }
 }
