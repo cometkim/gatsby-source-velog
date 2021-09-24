@@ -1,4 +1,6 @@
 # gatsby-source-velog
+[![npm](https://img.shields.io/npm/v/gatsby-source-velog)](https://www.npmjs.org/package/gatsby-source-velog)
+[![License: MIT](https://img.shields.io/github/license/cometkim/gatsby-source-velog)](#LICENSE)
 
 [GatsbyJS](https://www.gatsbyjs.org/) source plugin for [Velog](https://velog.io), the blogging platform created by [@velopert](https://github.com/velopert).
 
