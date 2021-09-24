@@ -1674,6 +1674,37 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graphql-codegen/typescript-graphql-request@npm:^4.1.4":
+  version: 4.1.4
+  resolution: "@graphql-codegen/typescript-graphql-request@npm:4.1.4"
+  dependencies:
+    "@graphql-codegen/plugin-helpers": ^2.1.1
+    "@graphql-codegen/visitor-plugin-common": 2.2.1
+    auto-bind: ~4.0.0
+    tslib: ~2.3.0
+  peerDependencies:
+    graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
+    graphql-request: ^3.4.0
+    graphql-tag: ^2.0.0
+  checksum: cf880b457956beae3abbc5264a9bbf7c226f70f47ea6079cac1f583a6db9e91b3652376046cfb6afcb91a71852981b731ca44988e120339b256ccf0e65d2778d
+  languageName: node
+  linkType: hard
+
+"@graphql-codegen/typescript-operations@npm:^2.1.4":
+  version: 2.1.4
+  resolution: "@graphql-codegen/typescript-operations@npm:2.1.4"
+  dependencies:
+    "@graphql-codegen/plugin-helpers": ^2.1.1
+    "@graphql-codegen/typescript": ^2.2.2
+    "@graphql-codegen/visitor-plugin-common": 2.2.1
+    auto-bind: ~4.0.0
+    tslib: ~2.3.0
+  peerDependencies:
+    graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
+  checksum: 3cc90a44ab638c6f7801af69d78bf80646f54692c755bfed1a5318ac588ae19e0f0928d67495f83eb0315bff68524d112481054c7f7548f0c47b4d0ea054191d
+  languageName: node
+  linkType: hard
+
 "@graphql-codegen/typescript@npm:^2.2.2":
   version: 2.2.2
   resolution: "@graphql-codegen/typescript@npm:2.2.2"
@@ -7337,11 +7368,15 @@ fsevents@~2.3.2:
     "@babel/plugin-transform-typescript": ^7.15.4
     "@graphql-codegen/cli": ^2.2.0
     "@graphql-codegen/typescript": ^2.2.2
+    "@graphql-codegen/typescript-graphql-request": ^4.1.4
+    "@graphql-codegen/typescript-operations": ^2.1.4
     babel-preset-gatsby-package: ^1.14.0
     gatsby: ^3.14.0
     gatsby-source-filesystem: ^3.0.0
     graphql: ^15.6.0
+    graphql-request: ^3.5.0
     typescript: ^4.4.3
+    undici: ^4.7.0
   peerDependencies:
     gatsby: ^2.25.0 || ^3.0.0 || ^4.0.0
   languageName: unknown
@@ -7899,7 +7934,7 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"graphql-request@npm:^3.3.0":
+"graphql-request@npm:^3.3.0, graphql-request@npm:^3.5.0":
   version: 3.5.0
   resolution: "graphql-request@npm:3.5.0"
   dependencies:
@@ -14450,6 +14485,13 @@ typescript@^4.4.3:
   version: 0.1.2
   resolution: "unc-path-regex@npm:0.1.2"
   checksum: a05fa2006bf4606051c10fc7968f08ce7b28fa646befafa282813aeb1ac1a56f65cb1b577ca7851af2726198d59475bb49b11776036257b843eaacee2860a4ec
+  languageName: node
+  linkType: hard
+
+"undici@npm:^4.7.0":
+  version: 4.7.0
+  resolution: "undici@npm:4.7.0"
+  checksum: bfa38ba56f2d90c1c6b9eb2e5cfd8e183c79062c81edf1aa35f24f504bcd474c4c117b48ba97f2e510c1627f48ca2f2eb3bf712e2da1bce6ec2bf87b223e9625
   languageName: node
   linkType: hard
 

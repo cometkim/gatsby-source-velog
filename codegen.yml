@@ -1,9 +1,14 @@
 schema: velog.v2.graphql
 
+documents: src/documents.graphql
+
 generates:
-  ./src/__genereated__/types.ts:
+  ./src/__generated__/sdk.ts:
     plugins:
       - typescript
+      - typescript-operations
+      - typescript-graphql-request
     config:
       avoidOptionals: true
       enumsAsTypes: true
+      gqlImport: graphql-request#gql

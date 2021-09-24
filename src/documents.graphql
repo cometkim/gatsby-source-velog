@@ -1,0 +1,27 @@
+query getTagsByUsername($username: String!) {
+  userTags(username: $username) {
+    tags {
+      id
+      name
+      description
+      thumbnail
+    }
+    postCount: posts_count
+  }
+}
+
+query getUserByUsername($username: String!) {
+  user(username: $username) {
+    id
+    username
+    isCertified: is_certified
+    profile {
+      id
+      displayName: display_name
+      bio: short_bio
+      thumbnail
+      aboutHtml: about
+      socialProfiles: profile_links
+    }
+  }
+}

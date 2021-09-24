@@ -4,7 +4,9 @@
 node_modules/
 
 # Build Outputs
-/gatsby-node.js
+/*.js
+/__generated__/
+!/index.js
 
 # Yarn (Berry)
 .yarn/*

@@ -1,3 +1,6 @@
+import { GraphQLClient } from 'graphql-request';
+import * as Dom from 'graphql-request/dist/types.dom';
+import { gql } from 'graphql-request';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -465,3 +468,66 @@ export type VelogConfig = {
   logo_image: Maybe<Scalars['String']>;
   title: Maybe<Scalars['String']>;
 };
+
+export type GetTagsByUsernameQueryVariables = Exact<{
+  username: Scalars['String'];
+}>;
+
+
+export type GetTagsByUsernameQuery = { __typename?: 'Query', userTags: Maybe<{ __typename?: 'UserTags', postCount: Maybe<number>, tags: Maybe<Array<Maybe<{ __typename?: 'Tag', id: string, name: Maybe<string>, description: Maybe<string>, thumbnail: Maybe<string> }>>> }> };
+
+export type GetUserByUsernameQueryVariables = Exact<{
+  username: Scalars['String'];
+}>;
+
+
+export type GetUserByUsernameQuery = { __typename?: 'Query', user: Maybe<{ __typename?: 'User', id: string, username: Maybe<string>, isCertified: Maybe<boolean>, profile: Maybe<{ __typename?: 'UserProfile', id: string, thumbnail: Maybe<string>, displayName: Maybe<string>, bio: Maybe<string>, aboutHtml: Maybe<string>, socialProfiles: Maybe<any> }> }> };
+
+
+export const GetTagsByUsernameDocument = gql`
+    query getTagsByUsername($username: String!) {
+  userTags(username: $username) {
+    tags {
+      id
+      name
+      description
+      thumbnail
+    }
+    postCount: posts_count
+  }
+}
+    `;
+export const GetUserByUsernameDocument = gql`
+    query getUserByUsername($username: String!) {
+  user(username: $username) {
+    id
+    username
+    isCertified: is_certified
+    profile {
+      id
+      displayName: display_name
+      bio: short_bio
+      thumbnail
+      aboutHtml: about
+      socialProfiles: profile_links
+    }
+  }
+}
+    `;
+
+export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string) => Promise<T>;
+
+
+const defaultWrapper: SdkFunctionWrapper = (action, _operationName) => action();
+
+export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
+  return {
+    getTagsByUsername(variables: GetTagsByUsernameQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetTagsByUsernameQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetTagsByUsernameQuery>(GetTagsByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getTagsByUsername');
+    },
+    getUserByUsername(variables: GetUserByUsernameQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetUserByUsernameQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetUserByUsernameQuery>(GetUserByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUserByUsername');
+    }
+  };
+}
+export type Sdk = ReturnType<typeof getSdk>;

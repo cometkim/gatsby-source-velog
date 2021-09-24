@@ -24,7 +24,9 @@
     "gatsby": "^2.25.0 || ^3.0.0 || ^4.0.0"
   },
   "dependencies": {
-    "gatsby-source-filesystem": "^3.0.0"
+    "gatsby-source-filesystem": "^3.0.0",
+    "graphql-request": "^3.5.0",
+    "undici": "^4.7.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.7",
@@ -32,6 +34,8 @@
     "@babel/plugin-transform-typescript": "^7.15.4",
     "@graphql-codegen/cli": "^2.2.0",
     "@graphql-codegen/typescript": "^2.2.2",
+    "@graphql-codegen/typescript-graphql-request": "^4.1.4",
+    "@graphql-codegen/typescript-operations": "^2.1.4",
     "babel-preset-gatsby-package": "^1.14.0",
     "gatsby": "^3.14.0",
     "graphql": "^15.6.0",

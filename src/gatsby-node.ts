@@ -1,11 +1,14 @@
 import type { GatsbyNode } from 'gatsby';
-
+import { createRemoteFileNode } from 'gatsby-source-filesystem';
 import type { PluginOptions } from './types';
+import { makeClient } from './client';
 
 export const pluginOptionsSchema: GatsbyNode['pluginOptionsSchema'] = ({
   Joi,
 }) => {
   return Joi.object({
+    baseUrl: Joi.string().default('https://velog.io'),
+    endpoint: Joi.string().default('https://v2.velog.io/graphql'),
     username: Joi.string().required(),
     includeTags: Joi.array().items(Joi.string()).optional(),
   });
@@ -27,20 +30,20 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
       posts: [VelogPost!]! @link(by: "velogId")
     }
 
-    type VelogUser implements Node {
+    type VelogUser implements Node @dontInfer {
       velogId: String!
       velogUrl: String!
       username: String!
       displayName: String!
-      bio: String!
-      aboutHtml: String!
+      bio: String
+      aboutHtml: String
       isCertified: Boolean!
-      thumbnail: File
-      social: VelogUserSocial!
+      thumbnail: File @link
+      socialProfile: VelogUserSocialProfile!
       posts: [VelogPost!]! @link(by: "velogId")
     }
 
-    type VelogUserSocial {
+    type VelogUserSocialProfile {
       url: String
       email: String
       github: String
@@ -71,4 +74,75 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
       series: VelogSeries
     }
   `);
+};
+
+export const createResolvers: GatsbyNode['createResolvers'] = async ({
+  createResolvers,
+}, options) => {
+  // Must be validated by pluginOptionsSchema
+  const { baseUrl } = options as unknown as Required<PluginOptions>;
+
+  createResolvers({
+    VelogUser: {
+      velogUrl: {
+        type: 'String!',
+        resolve: (source: { username: string }) => {
+          return `${baseUrl}/@${source.username}`;
+        },
+      },
+    },
+  });
+};
+
+export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
+  actions,
+  store,
+  cache,
+  reporter,
+  createNodeId,
+  createContentDigest,
+}, options) => {
+  const { createNode } = actions;
+
+  // Must be validated by pluginOptionsSchema
+  const {
+    endpoint,
+    username,
+  } = options as unknown as Required<PluginOptions>;
+
+  const client = makeClient(endpoint);
+  const userResult = await client.getUserByUsername({ username });
+  const user = userResult.user!;
+  const userProfile = user.profile!;
+
+  const userSource: Record<string, unknown> = {
+    ...user,
+    ...userProfile,
+    velogId: user.id,
+  };
+
+  if (userProfile.thumbnail) {
+    const thumbnailNode = await createRemoteFileNode({
+      url: userProfile.thumbnail,
+      store,
+      cache,
+      reporter,
+      createNode,
+      createNodeId,
+    });
+    userSource.thumbnail = thumbnailNode.id;
+  } else {
+    delete userSource['thumbnail'];
+  }
+
+  createNode({
+    ...userSource,
+    id: createNodeId(`VelogUser:${user.id}`),
+    parent: null,
+    children: [],
+    internal: {
+      type: 'VelogUser',
+      contentDigest: createContentDigest(userSource),
+    },
+  });
 };
