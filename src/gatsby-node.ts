@@ -212,7 +212,7 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
           extensions: {
             link: {
               by: 'velogId',
-              from: 'series.velogId',
+              from: 'velogId',
             },
           },
         }
