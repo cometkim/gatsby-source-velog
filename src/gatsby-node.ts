@@ -57,7 +57,7 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
         posts: {
           type: '[VelogPost!]!',
           resolve(source: { velogId: string }, _args, context) {
-            return context.nodeModle.runQuery({
+            return context.nodeModel.runQuery({
               type: 'VelogPost',
               query: {
                 filter: {
