@@ -403,7 +403,7 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
       children: [],
       internal: {
         type: 'VelogPost',
-        mediaType: 'text/markdown',
+        mediaType: post.isMarkdown ? 'text/markdown': undefined,
         content: post.rawContent ?? '',
         contentDigest: createContentDigest(postSource),
       },

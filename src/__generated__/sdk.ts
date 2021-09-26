@@ -489,7 +489,7 @@ export type GetPostsByUsernameQueryVariables = Exact<{
 }>;
 
 
-export type GetPostsByUsernameQuery = { __typename?: 'Query', posts: Maybe<Array<Maybe<{ __typename?: 'Post', thumbnail: Maybe<string>, title: Maybe<string>, tags: Maybe<Array<Maybe<string>>>, velogId: string, shortDescription: Maybe<string>, slug: Maybe<string>, publishedAt: Maybe<any>, updatedAt: Maybe<any>, rawContent: Maybe<string>, author: Maybe<{ __typename?: 'User', username: Maybe<string>, velogId: string }>, series: Maybe<{ __typename?: 'Series', velogId: string, seriesPosts: Maybe<Array<Maybe<{ __typename?: 'SeriesPost', index: Maybe<number>, item: Maybe<{ __typename?: 'Post', velogId: string }> }>>> }> }>>> };
+export type GetPostsByUsernameQuery = { __typename?: 'Query', posts: Maybe<Array<Maybe<{ __typename?: 'Post', thumbnail: Maybe<string>, title: Maybe<string>, tags: Maybe<Array<Maybe<string>>>, velogId: string, shortDescription: Maybe<string>, slug: Maybe<string>, publishedAt: Maybe<any>, updatedAt: Maybe<any>, rawContent: Maybe<string>, isMarkdown: Maybe<boolean>, author: Maybe<{ __typename?: 'User', username: Maybe<string>, velogId: string }>, series: Maybe<{ __typename?: 'Series', velogId: string, seriesPosts: Maybe<Array<Maybe<{ __typename?: 'SeriesPost', index: Maybe<number>, item: Maybe<{ __typename?: 'Post', velogId: string }> }>>> }> }>>> };
 
 export type GetSeriesListByUsernameQueryVariables = Exact<{
   username: Scalars['String'];
@@ -540,6 +540,7 @@ export const GetPostsByUsernameDocument = gql`
     publishedAt: released_at
     updatedAt: updated_at
     rawContent: body
+    isMarkdown: is_markdown
     author: user {
       velogId: id
       username
