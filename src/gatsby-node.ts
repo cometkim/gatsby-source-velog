@@ -134,7 +134,7 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
       name: 'VelogPost',
       interfaces: ['Node'],
       extensions: {
-        infer: false,
+        infer: true,
       },
       fields: {
         velogId: 'String!',
@@ -403,7 +403,7 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
       children: [],
       internal: {
         type: 'VelogPost',
-        mediaType: 'text/markdown',
+        mediaType: post.isMarkdown ? 'text/markdown': undefined,
         content: post.rawContent ?? '',
         contentDigest: createContentDigest(postSource),
       },

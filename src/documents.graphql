@@ -36,6 +36,7 @@ query getPostsByUsername($username: String!, $cursor: ID) {
     publishedAt: released_at
     updatedAt: updated_at
     rawContent: body
+    isMarkdown: is_markdown
     author: user {
       velogId: id
       username
