@@ -134,7 +134,7 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
       name: 'VelogPost',
       interfaces: ['Node'],
       extensions: {
-        infer: false,
+        infer: true,
       },
       fields: {
         velogId: 'String!',
