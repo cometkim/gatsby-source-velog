@@ -56,8 +56,8 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
         },
         posts: {
           type: '[VelogPost!]!',
-          resolve(source: { velogId: string }, _args, context) {
-            return context.nodeModel.runQuery({
+          async resolve(source: { velogId: string }, _args, context) {
+            const { entries } = await context.nodeModel.findAll({
               type: 'VelogPost',
               query: {
                 filter: {
@@ -66,8 +66,8 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
                   },
                 },
               },
-              firstOnly: false,
             });
+            return entries;
           },
         },
       },
@@ -112,8 +112,8 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
         },
         posts: {
           type: '[VelogPost!]!',
-          resolve(source: { name: string }, _args, context) {
-            return context.nodeModel.runQuery({
+          async resolve(source: { name: string }, _args, context) {
+            const { entries } = await context.nodeModel.findAll({
               type: 'VelogPost',
               query: {
                 filter: {
@@ -124,8 +124,8 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
                   },
                 },
               },
-              firstOnly: false,
             });
+            return entries;
           },
         },
       },
@@ -252,8 +252,8 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
         },
         posts: {
           type: '[VelogPost!]!',
-          resolve(source: { posts: Array<{ item: { velogId: string } }> }, _args, context) {
-            return context.nodeModel.runQuery({
+          async resolve(source: { posts: Array<{ item: { velogId: string } }> }, _args, context) {
+            const { entries } = await context.nodeModel.findAll({
               type: 'VelogPost',
               query: {
                 filter: {
@@ -262,8 +262,8 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
                   },
                 },
               },
-              firstOnly: false,
             });
+            return entries;
           },
         },
       },
