@@ -37,8 +37,8 @@
     "gatsby": "^2.25.0 || ^3.0.0 || ^4.0.0"
   },
   "dependencies": {
-    "gatsby-source-filesystem": "^3.0.0",
-    "graphql-request": "^3.5.0"
+    "gatsby-source-filesystem": "^4.5.2",
+    "graphql-request": "^3.7.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.7",

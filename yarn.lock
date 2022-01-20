@@ -6810,7 +6810,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastq@npm:^1.11.1, fastq@npm:^1.13.0, fastq@npm:^1.6.0":
+"fastq@npm:^1.13.0, fastq@npm:^1.6.0":
   version: 1.13.0
   resolution: "fastq@npm:1.13.0"
   dependencies:
@@ -7258,24 +7258,6 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"gatsby-core-utils@npm:^2.14.0":
-  version: 2.14.0
-  resolution: "gatsby-core-utils@npm:2.14.0"
-  dependencies:
-    "@babel/runtime": ^7.15.4
-    ci-info: 2.0.0
-    configstore: ^5.0.1
-    file-type: ^16.5.3
-    fs-extra: ^10.0.0
-    got: ^11.8.2
-    node-object-hash: ^2.3.9
-    proper-lockfile: ^4.1.2
-    tmp: ^0.2.1
-    xdg-basedir: ^4.0.0
-  checksum: b33a1a1e9a9adc53bbc4053e1e1fbfb066817a2e922058990f20612afb19c351dfb77919231553e2051b734a339957f716012d741823d0b7c387a2b7ccc3ea7b
-  languageName: node
-  linkType: hard
-
 "gatsby-core-utils@npm:^3.5.2":
   version: 3.5.2
   resolution: "gatsby-core-utils@npm:3.5.2"
@@ -7408,26 +7390,26 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"gatsby-source-filesystem@npm:^3.0.0":
-  version: 3.14.0
-  resolution: "gatsby-source-filesystem@npm:3.14.0"
+"gatsby-source-filesystem@npm:^4.5.2":
+  version: 4.5.2
+  resolution: "gatsby-source-filesystem@npm:4.5.2"
   dependencies:
     "@babel/runtime": ^7.15.4
     chokidar: ^3.5.2
-    fastq: ^1.11.1
+    fastq: ^1.13.0
     file-type: ^16.5.3
     fs-extra: ^10.0.0
-    gatsby-core-utils: ^2.14.0
+    gatsby-core-utils: ^3.5.2
     got: ^9.6.0
     md5-file: ^5.0.0
     mime: ^2.5.2
     pretty-bytes: ^5.4.1
     progress: ^2.0.3
     valid-url: ^1.0.9
-    xstate: ^4.14.0
+    xstate: ^4.26.1
   peerDependencies:
-    gatsby: ^3.0.0-next.0
-  checksum: c7b2d6b7aede12f5e59cec78753cc88e8a7eef6453e32953d36ec415140e53f64928424c82f5cf69b5658fb286da90d3bb76179f4cdf82ac5daebc32af0c61bc
+    gatsby: ^4.0.0-next
+  checksum: 63b8a34d0d1557ab071e1f4fccd3120db8219388a2eb0c9aec63d7f60bf6c94fd60cf5d523b0225a6fcc0740d4e3f17160f5d9a76d1ae0cecca186ca015b57ac
   languageName: node
   linkType: hard
 
@@ -7444,9 +7426,9 @@ fsevents@~2.3.2:
     "@graphql-codegen/typescript-operations": ^2.2.2
     babel-preset-gatsby-package: ^2.5.0
     gatsby: ^4.5.4
-    gatsby-source-filesystem: ^3.0.0
+    gatsby-source-filesystem: ^4.5.2
     graphql: ^16.2.0
-    graphql-request: ^3.5.0
+    graphql-request: ^3.7.0
     typescript: ^4.4.3
   peerDependencies:
     gatsby: ^2.25.0 || ^3.0.0 || ^4.0.0
@@ -8024,7 +8006,7 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"graphql-request@npm:^3.3.0, graphql-request@npm:^3.5.0":
+"graphql-request@npm:^3.3.0":
   version: 3.5.0
   resolution: "graphql-request@npm:3.5.0"
   dependencies:
@@ -8034,6 +8016,19 @@ fsevents@~2.3.2:
   peerDependencies:
     graphql: 14.x || 15.x
   checksum: ec7b6c9b72f8a17c1d3ba005062b9b79259f0eaa4b040cdc69bc7f62bf7eb8060de984ce1d8d726961bb3629be8dbd0b9dcf2db51acc00e8c7f34f927f00b821
+  languageName: node
+  linkType: hard
+
+"graphql-request@npm:^3.7.0":
+  version: 3.7.0
+  resolution: "graphql-request@npm:3.7.0"
+  dependencies:
+    cross-fetch: ^3.0.6
+    extract-files: ^9.0.0
+    form-data: ^3.0.0
+  peerDependencies:
+    graphql: 14 - 16
+  checksum: db3800cc4ee884cd1514d7d5eafafb9ed27694278fdddd7402345754a7d25e7d713246c72aa510b439b6df2633b74f2cf74fb36864a22a857d5fb2de1cf0b4d8
   languageName: node
   linkType: hard
 
@@ -10715,7 +10710,7 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"node-object-hash@npm:^2.3.10, node-object-hash@npm:^2.3.9":
+"node-object-hash@npm:^2.3.10":
   version: 2.3.10
   resolution: "node-object-hash@npm:2.3.10"
   checksum: 5d2a80f67810294d352205bfc4823aa6097b06cd5dee6e0fec7e2bc40b55bfe5251e90313046230abe2fd230b8b7c5dcda967243e4136b94971e2630e6c7d0cd
@@ -14950,14 +14945,7 @@ typescript@^4.4.3:
   languageName: node
   linkType: hard
 
-"xstate@npm:^4.14.0":
-  version: 4.25.0
-  resolution: "xstate@npm:4.25.0"
-  checksum: 3a4c4e3f3172b092116b1c32ea38d23ebdfd40d1aef2f00abb09667bbece63a1b5a8bc8f340706f3fafcd7c1063316852fa98dafd3e419ed0138a0035ded7c3d
-  languageName: node
-  linkType: hard
-
-"xstate@npm:^4.26.0":
+"xstate@npm:^4.26.0, xstate@npm:^4.26.1":
   version: 4.28.0
   resolution: "xstate@npm:4.28.0"
   checksum: 9953a3b3d1586c2cecc8fd904e4faa12b68edacd9bdac541aaf1a98f890e199b1fb056d0eaee8391e71f4d24bc6ab1e6d785be1b36b906d9f3e14ea1498822c6
