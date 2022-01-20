@@ -2,6 +2,7 @@ import { GraphQLClient } from 'graphql-request';
 import * as Dom from 'graphql-request/dist/types.dom';
 import { gql } from 'graphql-request';
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
@@ -91,24 +92,24 @@ export type MutationEditCommentArgs = {
 
 
 export type MutationEditPostArgs = {
-  body: Maybe<Scalars['String']>;
+  body: InputMaybe<Scalars['String']>;
   id: Scalars['ID'];
-  is_markdown: Maybe<Scalars['Boolean']>;
-  is_private: Maybe<Scalars['Boolean']>;
-  is_temp: Maybe<Scalars['Boolean']>;
-  meta: Maybe<Scalars['JSON']>;
-  series_id: Maybe<Scalars['ID']>;
-  tags: Maybe<Array<Maybe<Scalars['String']>>>;
-  thumbnail: Maybe<Scalars['String']>;
-  title: Maybe<Scalars['String']>;
-  url_slug: Maybe<Scalars['String']>;
+  is_markdown: InputMaybe<Scalars['Boolean']>;
+  is_private: InputMaybe<Scalars['Boolean']>;
+  is_temp: InputMaybe<Scalars['Boolean']>;
+  meta: InputMaybe<Scalars['JSON']>;
+  series_id: InputMaybe<Scalars['ID']>;
+  tags: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  thumbnail: InputMaybe<Scalars['String']>;
+  title: InputMaybe<Scalars['String']>;
+  url_slug: InputMaybe<Scalars['String']>;
 };
 
 
 export type MutationEditSeriesArgs = {
   id: Scalars['ID'];
   name: Scalars['String'];
-  series_order: Maybe<Array<Maybe<Scalars['ID']>>>;
+  series_order: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
 };
 
 
@@ -118,8 +119,8 @@ export type MutationLikePostArgs = {
 
 
 export type MutationMergeTagArgs = {
-  merge_to: Maybe<Scalars['String']>;
-  selected: Maybe<Scalars['String']>;
+  merge_to: InputMaybe<Scalars['String']>;
+  selected: InputMaybe<Scalars['String']>;
 };
 
 
@@ -176,7 +177,7 @@ export type MutationUpdate_Social_InfoArgs = {
 
 
 export type MutationUpdate_ThumbnailArgs = {
-  url: Maybe<Scalars['String']>;
+  url: InputMaybe<Scalars['String']>;
 };
 
 
@@ -186,23 +187,23 @@ export type MutationUpdate_Velog_TitleArgs = {
 
 
 export type MutationWriteCommentArgs = {
-  comment_id: Maybe<Scalars['ID']>;
+  comment_id: InputMaybe<Scalars['ID']>;
   post_id: Scalars['ID'];
   text: Scalars['String'];
 };
 
 
 export type MutationWritePostArgs = {
-  body: Maybe<Scalars['String']>;
-  is_markdown: Maybe<Scalars['Boolean']>;
-  is_private: Maybe<Scalars['Boolean']>;
-  is_temp: Maybe<Scalars['Boolean']>;
-  meta: Maybe<Scalars['JSON']>;
-  series_id: Maybe<Scalars['ID']>;
-  tags: Maybe<Array<Maybe<Scalars['String']>>>;
-  thumbnail: Maybe<Scalars['String']>;
-  title: Maybe<Scalars['String']>;
-  url_slug: Maybe<Scalars['String']>;
+  body: InputMaybe<Scalars['String']>;
+  is_markdown: InputMaybe<Scalars['Boolean']>;
+  is_private: InputMaybe<Scalars['Boolean']>;
+  is_temp: InputMaybe<Scalars['Boolean']>;
+  meta: InputMaybe<Scalars['JSON']>;
+  series_id: InputMaybe<Scalars['ID']>;
+  tags: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  thumbnail: InputMaybe<Scalars['String']>;
+  title: InputMaybe<Scalars['String']>;
+  url_slug: InputMaybe<Scalars['String']>;
 };
 
 export type Post = {
@@ -269,7 +270,7 @@ export type Query = {
 
 
 export type QueryCommentArgs = {
-  comment_id: Maybe<Scalars['ID']>;
+  comment_id: InputMaybe<Scalars['ID']>;
 };
 
 
@@ -284,55 +285,55 @@ export type QueryLastPostHistoryArgs = {
 
 
 export type QueryPostArgs = {
-  id: Maybe<Scalars['ID']>;
-  url_slug: Maybe<Scalars['String']>;
-  username: Maybe<Scalars['String']>;
+  id: InputMaybe<Scalars['ID']>;
+  url_slug: InputMaybe<Scalars['String']>;
+  username: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryPostHistoriesArgs = {
-  post_id: Maybe<Scalars['ID']>;
+  post_id: InputMaybe<Scalars['ID']>;
 };
 
 
 export type QueryPostsArgs = {
-  cursor: Maybe<Scalars['ID']>;
-  limit: Maybe<Scalars['Int']>;
-  tag: Maybe<Scalars['String']>;
-  temp_only: Maybe<Scalars['Boolean']>;
-  username: Maybe<Scalars['String']>;
+  cursor: InputMaybe<Scalars['ID']>;
+  limit: InputMaybe<Scalars['Int']>;
+  tag: InputMaybe<Scalars['String']>;
+  temp_only: InputMaybe<Scalars['Boolean']>;
+  username: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryReadingListArgs = {
-  cursor: Maybe<Scalars['ID']>;
-  limit: Maybe<Scalars['Int']>;
-  type: Maybe<ReadingListOption>;
+  cursor: InputMaybe<Scalars['ID']>;
+  limit: InputMaybe<Scalars['Int']>;
+  type: InputMaybe<ReadingListOption>;
 };
 
 
 export type QuerySearchPostsArgs = {
   keyword: Scalars['String'];
-  limit: Maybe<Scalars['Int']>;
-  offset: Maybe<Scalars['Int']>;
-  username: Maybe<Scalars['String']>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  username: InputMaybe<Scalars['String']>;
 };
 
 
 export type QuerySeriesArgs = {
-  id: Maybe<Scalars['ID']>;
-  url_slug: Maybe<Scalars['String']>;
-  username: Maybe<Scalars['String']>;
+  id: InputMaybe<Scalars['ID']>;
+  url_slug: InputMaybe<Scalars['String']>;
+  username: InputMaybe<Scalars['String']>;
 };
 
 
 export type QuerySeriesListArgs = {
-  username: Maybe<Scalars['String']>;
+  username: InputMaybe<Scalars['String']>;
 };
 
 
 export type QuerySubcommentsArgs = {
-  comment_id: Maybe<Scalars['ID']>;
+  comment_id: InputMaybe<Scalars['ID']>;
 };
 
 
@@ -342,32 +343,32 @@ export type QueryTagArgs = {
 
 
 export type QueryTagsArgs = {
-  cursor: Maybe<Scalars['ID']>;
-  limit: Maybe<Scalars['Int']>;
+  cursor: InputMaybe<Scalars['ID']>;
+  limit: InputMaybe<Scalars['Int']>;
   sort: Scalars['String'];
 };
 
 
 export type QueryTrendingPostsArgs = {
-  limit: Maybe<Scalars['Int']>;
-  offset: Maybe<Scalars['Int']>;
-  timeframe: Maybe<Scalars['String']>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  timeframe: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryUserArgs = {
-  id: Maybe<Scalars['ID']>;
-  username: Maybe<Scalars['String']>;
+  id: InputMaybe<Scalars['ID']>;
+  username: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryUserTagsArgs = {
-  username: Maybe<Scalars['String']>;
+  username: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryVelog_ConfigArgs = {
-  username: Maybe<Scalars['String']>;
+  username: InputMaybe<Scalars['String']>;
 };
 
 export type ReadCountByDay = {
@@ -474,29 +475,29 @@ export type GetTagsByUsernameQueryVariables = Exact<{
 }>;
 
 
-export type GetTagsByUsernameQuery = { __typename?: 'Query', userTags: Maybe<{ __typename?: 'UserTags', postCount: Maybe<number>, tags: Maybe<Array<Maybe<{ __typename?: 'Tag', name: Maybe<string>, description: Maybe<string>, thumbnail: Maybe<string>, velogId: string }>>> }> };
+export type GetTagsByUsernameQuery = { __typename?: 'Query', userTags: { __typename?: 'UserTags', postCount: number | null | undefined, tags: Array<{ __typename?: 'Tag', name: string | null | undefined, description: string | null | undefined, thumbnail: string | null | undefined, velogId: string } | null | undefined> | null | undefined } | null | undefined };
 
 export type GetUserByUsernameQueryVariables = Exact<{
   username: Scalars['String'];
 }>;
 
 
-export type GetUserByUsernameQuery = { __typename?: 'Query', user: Maybe<{ __typename?: 'User', username: Maybe<string>, velogId: string, isCertified: Maybe<boolean>, profile: Maybe<{ __typename?: 'UserProfile', thumbnail: Maybe<string>, displayName: Maybe<string>, bio: Maybe<string>, aboutHtml: Maybe<string>, socialProfile: Maybe<any> }> }> };
+export type GetUserByUsernameQuery = { __typename?: 'Query', user: { __typename?: 'User', username: string | null | undefined, velogId: string, isCertified: boolean | null | undefined, profile: { __typename?: 'UserProfile', thumbnail: string | null | undefined, displayName: string | null | undefined, bio: string | null | undefined, aboutHtml: string | null | undefined, socialProfile: any | null | undefined } | null | undefined } | null | undefined };
 
 export type GetPostsByUsernameQueryVariables = Exact<{
   username: Scalars['String'];
-  cursor: Maybe<Scalars['ID']>;
+  cursor: InputMaybe<Scalars['ID']>;
 }>;
 
 
-export type GetPostsByUsernameQuery = { __typename?: 'Query', posts: Maybe<Array<Maybe<{ __typename?: 'Post', thumbnail: Maybe<string>, title: Maybe<string>, tags: Maybe<Array<Maybe<string>>>, velogId: string, shortDescription: Maybe<string>, slug: Maybe<string>, publishedAt: Maybe<any>, updatedAt: Maybe<any>, rawContent: Maybe<string>, isMarkdown: Maybe<boolean>, author: Maybe<{ __typename?: 'User', username: Maybe<string>, velogId: string }>, series: Maybe<{ __typename?: 'Series', velogId: string, seriesPosts: Maybe<Array<Maybe<{ __typename?: 'SeriesPost', index: Maybe<number>, item: Maybe<{ __typename?: 'Post', velogId: string }> }>>> }> }>>> };
+export type GetPostsByUsernameQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', thumbnail: string | null | undefined, title: string | null | undefined, tags: Array<string | null | undefined> | null | undefined, velogId: string, shortDescription: string | null | undefined, slug: string | null | undefined, publishedAt: any | null | undefined, updatedAt: any | null | undefined, rawContent: string | null | undefined, isMarkdown: boolean | null | undefined, author: { __typename?: 'User', username: string | null | undefined, velogId: string } | null | undefined, series: { __typename?: 'Series', velogId: string, seriesPosts: Array<{ __typename?: 'SeriesPost', index: number | null | undefined, item: { __typename?: 'Post', velogId: string } | null | undefined } | null | undefined> | null | undefined } | null | undefined } | null | undefined> | null | undefined };
 
 export type GetSeriesListByUsernameQueryVariables = Exact<{
   username: Scalars['String'];
 }>;
 
 
-export type GetSeriesListByUsernameQuery = { __typename?: 'Query', seriesList: Maybe<Array<Maybe<{ __typename?: 'Series', name: Maybe<string>, description: Maybe<string>, thumbnail: Maybe<string>, velogId: string, slug: Maybe<string>, owner: Maybe<{ __typename?: 'User', username: Maybe<string>, velogId: string }>, posts: Maybe<Array<Maybe<{ __typename?: 'SeriesPost', item: Maybe<{ __typename?: 'Post', velogId: string }> }>>> }>>> };
+export type GetSeriesListByUsernameQuery = { __typename?: 'Query', seriesList: Array<{ __typename?: 'Series', name: string | null | undefined, description: string | null | undefined, thumbnail: string | null | undefined, velogId: string, slug: string | null | undefined, owner: { __typename?: 'User', username: string | null | undefined, velogId: string } | null | undefined, posts: Array<{ __typename?: 'SeriesPost', item: { __typename?: 'Post', velogId: string } | null | undefined } | null | undefined> | null | undefined } | null | undefined> | null | undefined };
 
 
 export const GetTagsByUsernameDocument = gql`
