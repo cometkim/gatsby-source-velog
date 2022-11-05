@@ -149,7 +149,7 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
         rawContent: 'String!',
         shortDescription: 'String!',
         thumbnail: {
-          type: 'String',
+          type: 'File',
           extensions: {
             link: {},
           },
