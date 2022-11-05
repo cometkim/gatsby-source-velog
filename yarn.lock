@@ -8344,6 +8344,7 @@ fsevents@~2.3.2:
     gatsby-source-filesystem: ^4.24.0
     graphql: ^16.6.0
     graphql-request: ^5.0.0
+    ts-node: ^10.9.1
     typescript: ^4.8.4
   peerDependencies:
     gatsby: ^2.25.0 || ^3.0.0 || ^4.0.0
@@ -14782,7 +14783,7 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"ts-node@npm:^10.8.1":
+"ts-node@npm:^10.8.1, ts-node@npm:^10.9.1":
   version: 10.9.1
   resolution: "ts-node@npm:10.9.1"
   dependencies:

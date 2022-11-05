@@ -40,6 +40,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["gatsby-source-filesystem", "virtual:8a9b6779a5ba5509ca8670ff74335f073b8a201b936c0c9742eb466ea156f8d34e2c840cea74fab1a705712d9b36c1b34f834ee6ba33fa0963231bc873352d67#npm:4.24.0"],\
             ["graphql", "npm:16.6.0"],\
             ["graphql-request", "virtual:8a9b6779a5ba5509ca8670ff74335f073b8a201b936c0c9742eb466ea156f8d34e2c840cea74fab1a705712d9b36c1b34f834ee6ba33fa0963231bc873352d67#npm:5.0.0"],\
+            ["ts-node", "virtual:8a9b6779a5ba5509ca8670ff74335f073b8a201b936c0c9742eb466ea156f8d34e2c840cea74fab1a705712d9b36c1b34f834ee6ba33fa0963231bc873352d67#npm:10.9.1"],\
             ["typescript", "patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=701156"]\
           ],\
           "linkType": "SOFT"\
@@ -13146,6 +13147,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["gatsby-source-filesystem", "virtual:8a9b6779a5ba5509ca8670ff74335f073b8a201b936c0c9742eb466ea156f8d34e2c840cea74fab1a705712d9b36c1b34f834ee6ba33fa0963231bc873352d67#npm:4.24.0"],\
             ["graphql", "npm:16.6.0"],\
             ["graphql-request", "virtual:8a9b6779a5ba5509ca8670ff74335f073b8a201b936c0c9742eb466ea156f8d34e2c840cea74fab1a705712d9b36c1b34f834ee6ba33fa0963231bc873352d67#npm:5.0.0"],\
+            ["ts-node", "virtual:8a9b6779a5ba5509ca8670ff74335f073b8a201b936c0c9742eb466ea156f8d34e2c840cea74fab1a705712d9b36c1b34f834ee6ba33fa0963231bc873352d67#npm:10.9.1"],\
             ["typescript", "patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=701156"]\
           ],\
           "linkType": "SOFT"\
@@ -20611,6 +20613,42 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["diff", "npm:4.0.2"],\
             ["make-error", "npm:1.3.6"],\
             ["typescript", null],\
+            ["v8-compile-cache-lib", "npm:3.0.1"],\
+            ["yn", "npm:3.1.1"]\
+          ],\
+          "packagePeers": [\
+            "@swc/core",\
+            "@swc/wasm",\
+            "@types/node",\
+            "@types/swc__core",\
+            "@types/swc__wasm",\
+            "@types/typescript",\
+            "typescript"\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["virtual:8a9b6779a5ba5509ca8670ff74335f073b8a201b936c0c9742eb466ea156f8d34e2c840cea74fab1a705712d9b36c1b34f834ee6ba33fa0963231bc873352d67#npm:10.9.1", {\
+          "packageLocation": "./.yarn/__virtual__/ts-node-virtual-c554056496/0/cache/ts-node-npm-10.9.1-6c268be7f4-090adff130.zip/node_modules/ts-node/",\
+          "packageDependencies": [\
+            ["ts-node", "virtual:8a9b6779a5ba5509ca8670ff74335f073b8a201b936c0c9742eb466ea156f8d34e2c840cea74fab1a705712d9b36c1b34f834ee6ba33fa0963231bc873352d67#npm:10.9.1"],\
+            ["@cspotcode/source-map-support", "npm:0.8.1"],\
+            ["@swc/core", null],\
+            ["@swc/wasm", null],\
+            ["@tsconfig/node10", "npm:1.0.9"],\
+            ["@tsconfig/node12", "npm:1.0.11"],\
+            ["@tsconfig/node14", "npm:1.0.3"],\
+            ["@tsconfig/node16", "npm:1.0.3"],\
+            ["@types/node", null],\
+            ["@types/swc__core", null],\
+            ["@types/swc__wasm", null],\
+            ["@types/typescript", null],\
+            ["acorn", "npm:8.5.0"],\
+            ["acorn-walk", "npm:8.2.0"],\
+            ["arg", "npm:4.1.3"],\
+            ["create-require", "npm:1.1.1"],\
+            ["diff", "npm:4.0.2"],\
+            ["make-error", "npm:1.3.6"],\
+            ["typescript", "patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=701156"],\
             ["v8-compile-cache-lib", "npm:3.0.1"],\
             ["yn", "npm:3.1.1"]\
           ],\

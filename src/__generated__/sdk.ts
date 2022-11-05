@@ -475,14 +475,14 @@ export type GetTagsByUsernameQueryVariables = Exact<{
 }>;
 
 
-export type GetTagsByUsernameQuery = { __typename?: 'Query', userTags: { __typename?: 'UserTags', postCount: number | null | undefined, tags: Array<{ __typename?: 'Tag', name: string | null | undefined, description: string | null | undefined, thumbnail: string | null | undefined, velogId: string } | null | undefined> | null | undefined } | null | undefined };
+export type GetTagsByUsernameQuery = { __typename?: 'Query', userTags: { __typename?: 'UserTags', postCount: number | null, tags: Array<{ __typename?: 'Tag', name: string | null, description: string | null, thumbnail: string | null, velogId: string } | null> | null } | null };
 
 export type GetUserByUsernameQueryVariables = Exact<{
   username: Scalars['String'];
 }>;
 
 
-export type GetUserByUsernameQuery = { __typename?: 'Query', user: { __typename?: 'User', username: string | null | undefined, velogId: string, isCertified: boolean | null | undefined, profile: { __typename?: 'UserProfile', thumbnail: string | null | undefined, displayName: string | null | undefined, bio: string | null | undefined, aboutHtml: string | null | undefined, socialProfile: any | null | undefined } | null | undefined } | null | undefined };
+export type GetUserByUsernameQuery = { __typename?: 'Query', user: { __typename?: 'User', username: string | null, velogId: string, isCertified: boolean | null, profile: { __typename?: 'UserProfile', thumbnail: string | null, displayName: string | null, bio: string | null, aboutHtml: string | null, socialProfile: any | null } | null } | null };
 
 export type GetPostsByUsernameQueryVariables = Exact<{
   username: Scalars['String'];
@@ -490,14 +490,14 @@ export type GetPostsByUsernameQueryVariables = Exact<{
 }>;
 
 
-export type GetPostsByUsernameQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', thumbnail: string | null | undefined, title: string | null | undefined, tags: Array<string | null | undefined> | null | undefined, velogId: string, shortDescription: string | null | undefined, slug: string | null | undefined, publishedAt: any | null | undefined, updatedAt: any | null | undefined, rawContent: string | null | undefined, isMarkdown: boolean | null | undefined, author: { __typename?: 'User', username: string | null | undefined, velogId: string } | null | undefined, series: { __typename?: 'Series', velogId: string, seriesPosts: Array<{ __typename?: 'SeriesPost', index: number | null | undefined, item: { __typename?: 'Post', velogId: string } | null | undefined } | null | undefined> | null | undefined } | null | undefined } | null | undefined> | null | undefined };
+export type GetPostsByUsernameQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', thumbnail: string | null, title: string | null, tags: Array<string | null> | null, velogId: string, shortDescription: string | null, slug: string | null, publishedAt: any | null, updatedAt: any | null, rawContent: string | null, isMarkdown: boolean | null, author: { __typename?: 'User', username: string | null, velogId: string } | null, series: { __typename?: 'Series', velogId: string, seriesPosts: Array<{ __typename?: 'SeriesPost', index: number | null, item: { __typename?: 'Post', velogId: string } | null } | null> | null } | null } | null> | null };
 
 export type GetSeriesListByUsernameQueryVariables = Exact<{
   username: Scalars['String'];
 }>;
 
 
-export type GetSeriesListByUsernameQuery = { __typename?: 'Query', seriesList: Array<{ __typename?: 'Series', name: string | null | undefined, description: string | null | undefined, thumbnail: string | null | undefined, velogId: string, slug: string | null | undefined, owner: { __typename?: 'User', username: string | null | undefined, velogId: string } | null | undefined, posts: Array<{ __typename?: 'SeriesPost', item: { __typename?: 'Post', velogId: string } | null | undefined } | null | undefined> | null | undefined } | null | undefined> | null | undefined };
+export type GetSeriesListByUsernameQuery = { __typename?: 'Query', seriesList: Array<{ __typename?: 'Series', name: string | null, description: string | null, thumbnail: string | null, velogId: string, slug: string | null, owner: { __typename?: 'User', username: string | null, velogId: string } | null, posts: Array<{ __typename?: 'SeriesPost', item: { __typename?: 'Post', velogId: string } | null } | null> | null } | null> | null };
 
 
 export const GetTagsByUsernameDocument = gql`
@@ -579,24 +579,24 @@ export const GetSeriesListByUsernameDocument = gql`
 }
     `;
 
-export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string) => Promise<T>;
+export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
 
-const defaultWrapper: SdkFunctionWrapper = (action, _operationName) => action();
+const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType) => action();
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
     getTagsByUsername(variables: GetTagsByUsernameQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetTagsByUsernameQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetTagsByUsernameQuery>(GetTagsByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getTagsByUsername');
+      return withWrapper((wrappedRequestHeaders) => client.request<GetTagsByUsernameQuery>(GetTagsByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getTagsByUsername', 'query');
     },
     getUserByUsername(variables: GetUserByUsernameQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetUserByUsernameQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetUserByUsernameQuery>(GetUserByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUserByUsername');
+      return withWrapper((wrappedRequestHeaders) => client.request<GetUserByUsernameQuery>(GetUserByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUserByUsername', 'query');
     },
     getPostsByUsername(variables: GetPostsByUsernameQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetPostsByUsernameQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetPostsByUsernameQuery>(GetPostsByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getPostsByUsername');
+      return withWrapper((wrappedRequestHeaders) => client.request<GetPostsByUsernameQuery>(GetPostsByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getPostsByUsername', 'query');
     },
     getSeriesListByUsername(variables: GetSeriesListByUsernameQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetSeriesListByUsernameQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetSeriesListByUsernameQuery>(GetSeriesListByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getSeriesListByUsername');
+      return withWrapper((wrappedRequestHeaders) => client.request<GetSeriesListByUsernameQuery>(GetSeriesListByUsernameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getSeriesListByUsername', 'query');
     }
   };
 }
