@@ -52,5 +52,6 @@
     "gatsby": "^4.24.7",
     "graphql": "^16.6.0",
     "typescript": "^4.8.4"
-  }
+  },
+  "packageManager": "yarn@3.2.4"
 }
