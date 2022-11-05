@@ -310,9 +310,7 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
   if (userProfile.thumbnail) {
     const thumbnailNode = await createRemoteFileNode({
       url: userProfile.thumbnail,
-      store,
       cache,
-      reporter,
       createNode,
       createNodeId,
     });
@@ -341,9 +339,7 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
     if (tag.thumbnail) {
       const thumbnailNode = await createRemoteFileNode({
         url: tag.thumbnail,
-        store,
         cache,
-        reporter,
         createNode,
         createNodeId,
       });
@@ -387,9 +383,7 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
     if (post.thumbnail) {
       const thumbnailNode = await createRemoteFileNode({
         url: post.thumbnail,
-        store,
         cache,
-        reporter,
         createNode,
         createNodeId,
       });
@@ -403,7 +397,7 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
       children: [],
       internal: {
         type: 'VelogPost',
-        mediaType: post.isMarkdown ? 'text/markdown': undefined,
+        mediaType: post.isMarkdown ? 'text/markdown' : undefined,
         content: post.rawContent ?? '',
         contentDigest: createContentDigest(postSource),
       },
@@ -420,9 +414,7 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
     if (series.thumbnail) {
       const thumbnailNode = await createRemoteFileNode({
         url: series.thumbnail,
-        store,
         cache,
-        reporter,
         createNode,
         createNodeId,
       });
